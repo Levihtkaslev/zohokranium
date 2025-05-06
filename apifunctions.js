@@ -199,7 +199,7 @@ async function getKranClientId(USERNAME, PASSWORD) {
         }
       );
       contactcount++
-      console.log(`updating contact data count :${contactcount}` )
+      console.log(`updating contact data count :${contactcount}`, `uhid :, ${contactId}`  )
 
 
       console.log('Contact updated:', response.data);  

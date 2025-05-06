@@ -25,34 +25,49 @@ async function zohocontact() {
       return;
     }
   
+    let count = 1;
     for (const contact of contacts) {
-  
-      const uhid = contact.UHID; 
-      const contactId = contact.id; 
-  
-      if (!uhid) continue; 
-  
-      const thirdPartyDetails = await apis.getKranPersonal(token, uhid );
-      if (!thirdPartyDetails) continue;
-  
       
+
+      if(!contact.KAge){
+        
+        const uhid = contact.UHID; 
+        const contactId = contact.id; 
+    
+        if (!uhid) continue; 
+    
+        const thirdPartyDetails = await apis.getKranPersonal(token, uhid );
+        if (!thirdPartyDetails) continue;
+    
+        
+    
+        const updatedData = {
+          Last_Name: thirdPartyDetails.name,
+          Referred_Type: thirdPartyDetails.reftype,
+          Referred_By:thirdPartyDetails.refby,
+          Address:thirdPartyDetails.address,
+          KGender:thirdPartyDetails.gender,
+          Date_of_Birth:thirdPartyDetails.dob,
+          Contact:thirdPartyDetails['mob no'],
+          Marital_status:thirdPartyDetails['marital status'],
+          KAge:thirdPartyDetails.age,
+          Nationality:thirdPartyDetails.nationality,
+          Kranium_registered: thirdPartyDetails['reg date/time'],
+          Email:thirdPartyDetails['email id']
+        };
+    
+        await apis.updateZohoContact(accessToken, contactId, updatedData);
+        
+
+      }else{
+        
+        console.log("I already there in crm", contact.UHID, "count", count)
+
+      }
+      count++
+      console.log("Count", count)
   
-      const updatedData = {
-        Last_Name: thirdPartyDetails.name,
-        Referred_Type: thirdPartyDetails.reftype,
-        Referred_By:thirdPartyDetails.refby,
-        Address:thirdPartyDetails.address,
-        KGender:thirdPartyDetails.gender,
-        Date_of_Birth:thirdPartyDetails.dob,
-        Contact:thirdPartyDetails['mob no'],
-        Marital_status:thirdPartyDetails['marital status'],
-        KAge:thirdPartyDetails.age,
-        Nationality:thirdPartyDetails.nationality,
-        Kranium_registered: thirdPartyDetails['reg date/time'],
-        Email:thirdPartyDetails['email id']
-      };
-  
-      await apis.updateZohoContact(accessToken, contactId, updatedData);
+
     }
   }
 
