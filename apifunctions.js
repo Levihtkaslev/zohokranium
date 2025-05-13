@@ -284,7 +284,7 @@ async function createZohoDeal(accessToken, dealData) {
         if (errors.length > 0) {
           failedDeals += errors.length;
           errors.forEach(err => {
-            console.error('❌ Zoho Error details:', JSON.stringify(err, null, 2));
+            console.error('Zoho Error details:', JSON.stringify(err, null, 2));
           });
         } else {
           console.log('✅ Successful Zoho upsert:'/* , response.data.data */);
@@ -293,7 +293,7 @@ async function createZohoDeal(accessToken, dealData) {
       
     } catch (error) {
       failedDeals++;
-      console.error(`❌ Error upserting Zoho account (Deal #${failedDeals}):`, error?.response?.data || error.message);
+      console.error(` Error upserting Zoho account (Deal #${failedDeals}):`, error?.response?.data || error.message);
     }
   }
   

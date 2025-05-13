@@ -144,8 +144,11 @@ async function zohototal() {
         /* console.log("📤 Sending account data to Zoho:", JSON.stringify(accountData, null, 2)); */
         
         try {
-          const result = await apis.upsertZohoAccount(accessToken, accountData);
-          if (result && result.success) upsertedCount++;
+          if(totalsByLocation.all?.total !== existingAccount?.Total_Amount){
+            const result = await apis.upsertZohoAccount(accessToken, accountData);
+            if (result && result.success) upsertedCount++;
+          }
+         
       } catch (error) {
           console.error(`Upsert failed for UHID ${uhid}:`, error.message);
       }
